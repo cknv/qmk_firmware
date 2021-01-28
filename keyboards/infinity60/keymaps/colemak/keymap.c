@@ -1,6 +1,6 @@
 #include QMK_KEYBOARD_H
 
-#define TAPPING_TERM 175
+#define TAPPING_TERM 100
 
 enum custom_keycodes {
     GNAV = SAFE_RANGE,
