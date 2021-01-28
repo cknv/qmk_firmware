@@ -10,8 +10,26 @@ bool is_gross_nav_active = false;
 enum {
     GRESC,
 };
+
+void grave_esc_tap(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 1:
+            tap_code(KC_GRV);
+            break;
+        case 2:
+            tap_code(KC_ESC);
+            break;
+        case 3:
+            tap_code(KC_GRV);
+            tap_code(KC_GRV);
+            tap_code(KC_GRV);
+            break;
+    }
+    reset_tap_dance(state);
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [GRESC] = ACTION_TAP_DANCE_DOUBLE(KC_GRV, KC_ESC),
+    [GRESC] = ACTION_TAP_DANCE_FN(grave_esc_tap),
 };
 
 
