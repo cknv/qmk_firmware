@@ -1,15 +1,13 @@
 #include QMK_KEYBOARD_H
 
-#define TAPPING_TERM 100
+enum {
+    GRESC,
+};
 
 enum custom_keycodes {
     GNAV = SAFE_RANGE,
 };
 bool is_gross_nav_active = false;
-
-enum {
-    GRESC,
-};
 
 void grave_esc_tap(qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
@@ -50,9 +48,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_60_ansi_split_bs_rshift(
       TD(GRESC), KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,   KC_9,   KC_0,   KC_MINS,KC_EQL, KC_BSPC, _______,\
       KC_TAB,    KC_Q,   KC_W,   KC_F,   KC_P,   KC_G,   KC_J,   KC_L,   KC_U,   KC_Y,   KC_SCLN,KC_LBRC,KC_RBRC,KC_BSLS, \
-      LT(2, KC_BSPC),   KC_A,   KC_R,   KC_S,   KC_T,   KC_D,   KC_H,   KC_N,   KC_E,   KC_I,   KC_O,   KC_QUOT,KC_ENT,  \
+      KC_BSPC,   KC_A,   KC_R,   KC_S,   KC_T,   KC_D,   KC_H,   KC_N,   KC_E,   KC_I,   KC_O,   KC_QUOT,KC_ENT,  \
       KC_LSFT,   KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_K,   KC_M,   KC_COMM,KC_DOT, KC_SLSH,KC_RSFT,KC_NO, \
-      KC_LCTL,   KC_LGUI,KC_LALT,          LT(3, KC_SPC),       KC_RALT,KC_RGUI,LT(2, KC_DOWN), LT(1, KC_UP)),
+      KC_LCTL,LT(1, KC_LGUI),KC_LALT,          LT(1, KC_SPC),       KC_RALT,KC_RGUI,LT(1, KC_DOWN), LT(1, KC_UP)),
 
     /* Layer 1: Navigation
      * ,-----------------------------------------------------------.
@@ -62,17 +60,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |-----------------------------------------------------------|
      * |      |Lef|Dow|Rig|   |   |   |   |   |   |   |   |        |
      * |-----------------------------------------------------------|
-     * |        |   |   |   |   |   |   |   |   |   |   | GNAV |   |
+     * |        |   |   |   |   |   |   |   |   |   |   |      |   |
      * `-----------------------------------------------------------'
      * |     |   |     |                       |     |   |   |     |
      * `-----------------------------------------------------------'
      */
     [1] = LAYOUT_60_ansi_split_bs_rshift(
       _______,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_F9, KC_F10, KC_F11, KC_F12, KC_DEL, _______, \
-      _______,_______,  KC_UP,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______, \
-      _______,KC_LEFT,KC_DOWN,KC_RGHT,_______,_______,_______,_______,_______,_______,_______,_______,_______,            \
-      _______,_______,_______,_______,_______,_______,_______,_______,_______, _______,_______,GNAV,_______,            \
-      _______,_______,_______,          _______,               _______,_______,_______,_______),
+      _______,_______,_______,_______,_______,_______,_______,_______,KC_UP  ,_______,_______,KC_VOLD,KC_VOLU,_______,      \
+      _______,KC_LSFT,KC_LCTL,MO(2)  ,GNAV   ,_______,_______,KC_LEFT,KC_DOWN,KC_RGHT,_______,_______,_______,            \
+      _______,_______,_______,_______,_______,_______,_______,_______,_______, _______,_______,_______,_______,            \
+      _______,_______,MO(2)  ,          _______,               _______,_______,_______,_______),
 
     /* Layer 2: Unused
      * ,-----------------------------------------------------------.
@@ -89,32 +87,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [2] = LAYOUT_60_ansi_split_bs_rshift(
       _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,   \
-      _______,_______,_______,_______,_______,_______,_______,_______,KC_UP  ,_______,_______,_______,_______,_______,      \
-      _______,_______,_______,_______,_______,_______,_______,KC_LEFT,KC_DOWN,KC_RGHT,_______,_______,_______,            \
-      _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,            \
-      _______,_______,_______,          _______,               _______,_______,_______,_______),
-
-
-    [3] = LAYOUT_60_ansi_split_bs_rshift(
-      _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,   \
-      _______,_______,_______,_______,_______,_______,_______,_______,KC_UP  ,_______,_______,_______,_______,_______,      \
-      GNAV,  _______,_______,_______,_______,_______,_______,KC_LEFT,KC_DOWN,KC_RGHT,_______,_______,_______,            \
+      _______,_______,_______,_______,_______,_______,_______,_______,KC_PGUP  ,_______,_______,_______,_______,_______,      \
+      _______,_______,_______,_______,_______,_______,_______,KC_HOME,KC_PGDN,KC_END,_______,_______,_______,            \
       _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,            \
       _______,_______,_______,          _______,               _______,_______,_______,_______),
 };
 
-void gross_nav(keyrecord_t *record, uint16_t fine, uint16_t gross) {
-    if (is_gross_nav_active) {
-        if (record->event.pressed) {
-            register_code(gross);
+void gross_nav(keyrecord_t *record, uint16_t kc, bool pressed) {
+    if (!is_gross_nav_active) {
+        if (pressed) {
+            register_code(kc);
         } else {
-            unregister_code(gross);
+            unregister_code(kc);
         }
-    } else {
-        if (record->event.pressed) {
-            register_code(fine);
-        } else {
-            unregister_code(fine);
+    } else if (pressed) {
+        for (int i = 0; i < 5; i++) {
+            tap_code(kc);
         }
     }
 }
@@ -129,22 +117,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case KC_UP:
             // Override up to page up, when gross navigation is active
-            gross_nav(record, KC_UP, KC_PGUP);
+            gross_nav(record, KC_UP, record->event.pressed);
             return false;
             break;
         case KC_DOWN:
             // Override down to page down, when gross navigation is active
-            gross_nav(record, KC_DOWN, KC_PGDN);
+            gross_nav(record, KC_DOWN, record->event.pressed);
             return false;
             break;
         case KC_LEFT:
             // Override left to home, when gross navigation is active
-            gross_nav(record, KC_LEFT, KC_HOME);
+            gross_nav(record, KC_LEFT, record->event.pressed);
             return false;
             break;
         case KC_RGHT:
             // Override right to end, when gross navigation is active
-            gross_nav(record, KC_RGHT, KC_END);
+            gross_nav(record, KC_RGHT, record->event.pressed);
             return false;
             break;
     }
