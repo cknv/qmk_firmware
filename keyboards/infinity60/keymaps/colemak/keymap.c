@@ -9,6 +9,8 @@ enum custom_keycodes {
 };
 bool is_gross_nav_active = false;
 
+// Custom grave/esc tap logic.
+// Press once for one grace, twice for esc, and three times for three graves.
 void grave_esc_tap(qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
         case 1:
@@ -32,7 +34,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    /* Layer 0: Default Layer
+    /* Layer 0: Primary Layer
      * ,-----------------------------------------------------------.
      * |Esc|  1|  2|  3|  4|  5|  6|  7|  8|  9|  0|  -|  =|Bksp|  |
      * |-----------------------------------------------------------|
@@ -52,17 +54,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_LSFT,   KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_K,   KC_M,   KC_COMM,KC_DOT, KC_SLSH,KC_RSFT,KC_NO, \
       KC_LCTL,LT(1, KC_LGUI),KC_LALT,          LT(1, KC_SPC),       KC_RALT,KC_RGUI,LT(1, KC_DOWN), LT(1, KC_UP)),
 
-    /* Layer 1: Navigation
+    /* Layer 1: Secondary Layer
      * ,-----------------------------------------------------------.
      * |   | F1| F2| F3| F4| F5| F6| F7| F8| F9|F10|F11|F12|Del|   |
      * |-----------------------------------------------------------|
-     * |     |   |Up |   |   |   |   |   |   |   |   |   |   |     |
+     * |     |   |   |   |   |   |   |   |Up |   |   |VUp |VDn|    |
      * |-----------------------------------------------------------|
-     * |      |Lef|Dow|Rig|   |   |   |   |   |   |   |   |        |
+     * |      |Shf|Ctl|L2 |Nav|   |   |Lef|Dwn|Rgt|   |   |        |
      * |-----------------------------------------------------------|
      * |        |   |   |   |   |   |   |   |   |   |   |      |   |
      * `-----------------------------------------------------------'
-     * |     |   |     |                       |     |   |   |     |
+     * |     |   |L2   |                       |     |   |   |     |
      * `-----------------------------------------------------------'
      */
     [1] = LAYOUT_60_ansi_split_bs_rshift(
@@ -72,13 +74,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______,_______,_______,_______,_______,_______,_______,_______,_______, _______,_______,_______,_______,            \
       _______,_______,MO(2)  ,          _______,               _______,_______,_______,_______),
 
-    /* Layer 2: Unused
+    /* Layer 2: Coarse Navigation
      * ,-----------------------------------------------------------.
      * |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
      * |-----------------------------------------------------------|
-     * |     |   |   |   |   |   |   |   |   |   |   |   |   |     |
+     * |     |   |   |   |   |   |   |   |PUp|   |   |   |   |     |
      * |-----------------------------------------------------------|
-     * |      |   |   |   |   |   |   |   |   |   |   |   |        |
+     * |      |   |   |   |   |   |   |Hom|PDn|End|   |   |        |
      * |-----------------------------------------------------------|
      * |        |   |   |   |   |   |   |   |   |   |   |      |   |
      * `-----------------------------------------------------------'
@@ -93,6 +95,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______,_______,_______,          _______,               _______,_______,_______,_______),
 };
 
+// Repeats Key presses if gross_nav_active is true for a number of times
+// This makes enables a gross navigation style inbetween up/down/left/right and
+// page up/down and home/end.
+// I doubt this is the final form, though, there seems to smarter ways to do this.
 void gross_nav(keyrecord_t *record, uint16_t kc, bool pressed) {
     if (!is_gross_nav_active) {
         if (pressed) {
