@@ -10,7 +10,7 @@ enum custom_keycodes {
 bool is_gross_nav_active = false;
 uint16_t gross_nav_kc = 0;
 uint16_t gross_nav_timer = 0;
-static const uint8_t GROSS_NAV_MULTIPLIER = 5;
+static const uint8_t GROSS_NAV_MULTIPLIER = 8;
 
 // Custom grave/esc tap logic.
 // Press once for one grace, twice for esc, and three times for three graves.
