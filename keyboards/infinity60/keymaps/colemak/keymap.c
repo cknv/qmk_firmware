@@ -8,6 +8,9 @@ enum custom_keycodes {
     GNAV = SAFE_RANGE,
 };
 bool is_gross_nav_active = false;
+uint16_t gross_nav_kc = 0;
+uint16_t gross_nav_timer = 0;
+static const uint8_t GROSS_NAV_MULTIPLIER = 5;
 
 // Custom grave/esc tap logic.
 // Press once for one grace, twice for esc, and three times for three graves.
@@ -95,53 +98,58 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______,_______,_______,          _______,               _______,_______,_______,_______),
 };
 
-// Repeats Key presses if gross_nav_active is true for a number of times
-// This makes enables a gross navigation style inbetween up/down/left/right and
-// page up/down and home/end.
-// I doubt this is the final form, though, there seems to smarter ways to do this.
-void gross_nav(keyrecord_t *record, uint16_t kc, bool pressed) {
-    if (!is_gross_nav_active) {
-        if (pressed) {
-            register_code(kc);
-        } else {
-            unregister_code(kc);
-        }
-    } else if (pressed) {
-        for (int i = 0; i < 5; i++) {
-            tap_code(kc);
-        }
+// Repeats a keycode a bunch of times.
+// This enables a style of navigation that between up/down and page up/down.
+void gross_nav(uint16_t kc) {
+    for (int i = 0; i < GROSS_NAV_MULTIPLIER; i++) {
+        tap_code(kc);
     }
+}
+
+// Starts a gross navigation loop if GNAV and the event is pressed.
+// Otherwise resets gross_nav_kc, which stops the loop.
+// The loop consists of registering some data that the matrix_scan_user picks up on.
+bool register_gross_nav(keyrecord_t *record, uint16_t kc) {
+    if (is_gross_nav_active && record->event.pressed) {
+        gross_nav_kc = kc;
+        gross_nav_timer = timer_read();
+        gross_nav(gross_nav_kc);
+        return false;
+    }
+    gross_nav_kc = 0;
+    return true;
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case GNAV:
             // Set gross navigations as active
-            // overriding "arrows" keys to their page up/down, home and end equivalents
             is_gross_nav_active = record->event.pressed;
+            if (!record->event.pressed) {
+                gross_nav_kc = 0;
+            }
             return true;
             break;
         case KC_UP:
-            // Override up to page up, when gross navigation is active
-            gross_nav(record, KC_UP, record->event.pressed);
-            return false;
+            return register_gross_nav(record, keycode);
             break;
         case KC_DOWN:
-            // Override down to page down, when gross navigation is active
-            gross_nav(record, KC_DOWN, record->event.pressed);
-            return false;
+            return register_gross_nav(record, keycode);
             break;
         case KC_LEFT:
-            // Override left to home, when gross navigation is active
-            gross_nav(record, KC_LEFT, record->event.pressed);
-            return false;
+            return register_gross_nav(record, keycode);
             break;
         case KC_RGHT:
-            // Override right to end, when gross navigation is active
-            gross_nav(record, KC_RGHT, record->event.pressed);
-            return false;
+            return register_gross_nav(record, keycode);
             break;
     }
 
     return true;
+}
+
+void matrix_scan_user(void) {
+    if (gross_nav_kc != 0 && timer_elapsed(gross_nav_timer) > 100) {
+            gross_nav(gross_nav_kc);
+            gross_nav_timer = timer_read();
+    }
 }

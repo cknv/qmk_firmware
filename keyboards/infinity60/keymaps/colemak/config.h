@@ -64,5 +64,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_FUNCTION
 
 #define TAPPING_TERM 100
-#define TAP_CODE_DELAY 50
+#define TAP_CODE_DELAY 10
 #endif
