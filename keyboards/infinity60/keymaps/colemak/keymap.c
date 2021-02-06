@@ -131,14 +131,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
             break;
         case KC_UP:
-            return register_gross_nav(record, keycode);
-            break;
         case KC_DOWN:
-            return register_gross_nav(record, keycode);
-            break;
         case KC_LEFT:
-            return register_gross_nav(record, keycode);
-            break;
         case KC_RGHT:
             return register_gross_nav(record, keycode);
             break;
