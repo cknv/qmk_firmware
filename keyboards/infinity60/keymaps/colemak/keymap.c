@@ -142,7 +142,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 void matrix_scan_user(void) {
-    if (gross_nav_kc != 0 && timer_elapsed(gross_nav_timer) > 100) {
+    if (gross_nav_kc != 0 && timer_elapsed(gross_nav_timer) > 150) {
             gross_nav(gross_nav_kc);
             gross_nav_timer = timer_read();
     }
