@@ -69,8 +69,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-// Retrigger gross navigation at key matrix scan.
+LEADER_EXTERNS();
+
 void matrix_scan_user(void) {
+    LEADER_DICTIONARY() {
+        leading = false;
+        leader_end();
+
+        SEQ_TWO_KEYS(KC_A, KC_A) {
+            if (get_mods() & MOD_MASK_SHIFT) {
+                SEND_STRING(SS_LCTL(SS_LSFT("u")) "00C5\n");
+            } else {
+                SEND_STRING(SS_LCTL(SS_LSFT("u")) "00E5\n");
+            }
+        } else
+        SEQ_TWO_KEYS(KC_A, KC_E) {
+            if (get_mods() & MOD_MASK_SHIFT) {
+                SEND_STRING(SS_LCTL(SS_LSFT("u")) "00C6\n");
+            } else {
+                SEND_STRING(SS_LCTL(SS_LSFT("u")) "00E6\n");
+            }
+        } else
+        SEQ_TWO_KEYS(KC_O, KC_E) {
+            if (get_mods() & MOD_MASK_SHIFT) {
+                SEND_STRING(SS_LCTL(SS_LSFT("u")) "00D8\n");
+            } else {
+                SEND_STRING(SS_LCTL(SS_LSFT("u")) "00F8\n");
+            }
+        }
+    }
+
+    // Retrigger gross navigation at key matrix scan.
     if (gross_nav_kc != 0 && timer_elapsed(gross_nav_timer) > 150) {
             gross_nav_timer = timer_read();
             gross_nav(gross_nav_kc);
