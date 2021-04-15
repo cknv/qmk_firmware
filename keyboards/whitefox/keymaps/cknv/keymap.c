@@ -6,7 +6,7 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
         TD(GRESC), KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,   KC_9,   KC_0,   KC_MINS, KC_EQL,_______,KC_BSPC,_______,\
         KC_TAB,    KC_Q,   KC_W,   KC_F,   KC_P,   KC_G,   KC_J,   KC_L,   KC_U,   KC_Y,   KC_SCLN,KC_LBRC,KC_RBRC,KC_BSLS,          DF(3),\
-        KC_DEL ,   KC_A,   KC_R,   KC_S,   KC_T,   KC_D,   KC_H,   KC_N,   KC_E,   KC_I,   KC_O,   KC_QUOT,_______, KC_ENT,        KC_LEAD,\
+        KC_DEL ,   KC_A,   KC_R,   KC_S,   KC_T,   KC_D,   KC_H,   KC_N,   KC_E,   KC_I,   KC_O,   KC_QUOT,_______, KC_ENT,         OSL(4),\
         KC_LSFT,   _______,KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_K,   KC_M,   KC_COMM,KC_DOT, KC_SLSH,KC_RSFT,          KC_UP,_______,\
         KC_LCTL,   KC_LGUI,KC_LALT,            LT(1, KC_SPC),           KC_RGUI,  KC_RCTL, _______,                KC_LEFT,KC_DOWN,KC_RGHT \
     ),
@@ -33,5 +33,13 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_CAPS,   KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L,KC_SCLN,KC_QUOT,_______, KC_ENT,        _______,\
         KC_LSFT,_______,   KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,KC_COMM, KC_DOT,KC_SLSH,KC_RSFT,          KC_UP,_______,\
         KC_LCTL,KC_LGUI,KC_LALT,                  KC_SPC,           KC_RGUI,  KC_RCTL, _______,                 KC_LEFT,KC_DOWN,KC_RGHT \
+    ),
+    // DK unicode layout
+    [4] = LAYOUT(
+        _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,\
+        _______,KC_AE,  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,        _______,\
+        _______,KC_OE,  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,        _______,\
+        _______,_______,KC_AA,  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,        _______,_______,\
+        _______,_______,_______,                  _______,           _______,  _______, _______,                _______,_______,_______ \
     ),
 };

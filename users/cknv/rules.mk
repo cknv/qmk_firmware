@@ -1,4 +1,4 @@
 SRC += cknv.c
 
 TAP_DANCE_ENABLE = yes
-LEADER_ENABLE = yes
+UNICODEMAP_ENABLE = yes
