@@ -14,7 +14,7 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [1] = LAYOUT(
         _______,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_F9, KC_F10, KC_F11, KC_F12,_______,_______,_______,\
         _______,KC_MSTP,KC_MPLY,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,  KC_UP,XXXXXXX,XXXXXXX,KC_VOLD,KC_VOLU,XXXXXXX,        _______,\
-        _______,KC_LSFT,KC_LCTL,  MO(2),   GNAV,XXXXXXX,XXXXXXX,KC_LEFT,KC_DOWN,KC_RGHT,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,        _______,\
+        _______,KC_LSFT,KC_LCTL,  MO(2),   GNAV,XXXXXXX,XXXXXXX,KC_LEFT,KC_DOWN,KC_RGHT,XXXXXXX,XXXXXXX,XXXXXXX,_______,        _______,\
         _______,_______,  MO(5),XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX,        _______,_______,\
         _______,_______,_______,                  _______,           _______,  _______, _______,                _______,_______,_______ \
     ),
