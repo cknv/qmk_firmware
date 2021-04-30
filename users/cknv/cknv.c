@@ -6,6 +6,7 @@ static uint16_t gross_nav_timer = 0;
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     [GRESC] = ACTION_TAP_DANCE_FN(grave_esc_tap),
+    [M45] = ACTION_TAP_DANCE_DOUBLE(KC_BTN4, KC_BTN5),
 };
 
 const uint32_t PROGMEM unicode_map[] = {

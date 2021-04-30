@@ -4,6 +4,7 @@ static const uint8_t GROSS_NAV_MULTIPLIER = 8;
 
 enum {
     GRESC,
+    M45,
 };
 
 enum custom_keycodes {
